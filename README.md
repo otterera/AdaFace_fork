@@ -1,7 +1,10 @@
+# このリポジトリはAdaFaceの作業用forkです。
+
+
 # AdaFace: Quality Adaptive Margin for Face Recognition
 
-Official github repository for AdaFace: Quality Adaptive Margin for Face Recognition. 
-The paper (https://arxiv.org/abs/2204.00964) is presented in CVPR 2022 (Oral). 
+Official github repository for AdaFace: Quality Adaptive Margin for Face Recognition.
+The paper (https://arxiv.org/abs/2204.00964) is presented in CVPR 2022 (Oral).
 
 
 > Abstract: Recognition in low quality face datasets is challenging because facial attributes are obscured and degraded. Advances in margin-based loss functions have resulted in enhanced discriminability of faces in the embedding space. Further, previous studies have studied the effect of adaptive losses to assign more importance to misclassified (hard) examples. In this work, we introduce another aspect of adaptiveness in the loss function, namely the image quality. We argue that the strategy to emphasize misclassified samples should be adjusted according to their image quality. Specifically, the relative importance of easy and hard samples should be based on the sample's image quality. We propose a new loss function that emphasizes samples of different difficulty based on their image quality. Our method achieves this in the form of an adaptive margin function by approximating the image quality with feature norms. Extensive experiments show that our method, AdaFace, improves the face recognition performance over the state-of-the-art (SoTA) on four datasets (IJB-B, IJB-C, IJB-S and TinyFace).
@@ -26,20 +29,20 @@ The paper (https://arxiv.org/abs/2204.00964) is presented in CVPR 2022 (Oral).
 ### Repository Updates
 - [x] [CVLFace](https://github.com/mk-minchul/CVLface) is the **new official repository** for AdaFace (supports various architectures such as ViT, SWIN-ViT, KP-RPE, etc).
 - [x] Added PartialFC AdaFace implementation at [CVLFace](https://github.com/mk-minchul/CVLface) (and much more functionalities related to face recognition for conducting research).
-- [x] Pytorch Lightning 1.8 compatibility is tested. 
+- [x] Pytorch Lightning 1.8 compatibility is tested.
 - [x] 5 Minute video presentation uploaded.
 - [x] Added the option to directly train with InsightFace dataset (train.rec) files without extracting images.
 
 ### News
-- You can also check out our new paper `KP-RPE: KeyPoint Relative Position Encoding for Face Recognition` [Paper](https://arxiv.org/pdf/2403.14852) [Video](https://www.youtube.com/watch?v=sVFswDdPUH4) [Code](https://github.com/mk-minchul/CVLface) for facial landmark assisted face recognition. TLDR: Face recognition with facial landmark for alignment robustness. **(SoTA in TinyFace, IJB-S)**. 
+- You can also check out our new paper `KP-RPE: KeyPoint Relative Position Encoding for Face Recognition` [Paper](https://arxiv.org/pdf/2403.14852) [Video](https://www.youtube.com/watch?v=sVFswDdPUH4) [Code](https://github.com/mk-minchul/CVLface) for facial landmark assisted face recognition. TLDR: Face recognition with facial landmark for alignment robustness. **(SoTA in TinyFace, IJB-S)**.
 - You can also check out our new paper `Cluster and Aggregate (CAFace, NeurIPS2022)` [Link](https://paperswithcode.com/paper/cluster-and-aggregate-face-recognition-with) for video based face recognition. TLDR: Face recognition with long probe videos.
 
 ### 5 Minute Video Presentation
 [![IMAGE ALT TEXT](assets/video_thumbnail.png)](https://www.youtube.com/watch?v=NfHzn6epAHM "AdaFace 5 minute video presentation")
 
 - https://www.youtube.com/watch?v=NfHzn6epAHM
-- The talk was given during the CVPR 2022 Conference. 
-Thank you all who showed interest in the paper during the oral and poster session. 
+- The talk was given during the CVPR 2022 Conference.
+Thank you all who showed interest in the paper during the oral and poster session.
 
 
 ### Demo Comparison between AdaFace and ArcFace on Low Quality Images
@@ -48,10 +51,10 @@ Thank you all who showed interest in the paper during the oral and poster sessio
 ![Demo](assets/adaface_demo5.gif)
 The demo shows a comparison between AdaFace and ArcFace on a live video.
 To show how model performs with low quality images, we show `original`, `blur+` and `blur++` setting where
-`blur++` means it is heavily blurred. 
+`blur++` means it is heavily blurred.
 The numbers with colorbox show the cosine similarity between the live image and the cloest matching gallery image.
-The statistics on the bottom show the cumulative count of true positive match for `blur++` setting. 
-AdaFace has high true positive rate. 
+The statistics on the bottom show the cumulative count of true positive match for `blur++` setting.
+AdaFace has high true positive rate.
 It also shows it is less prone to making false positive (red) mistakes as sometimes observed in ArcFace.
 
 # Usage
@@ -86,7 +89,7 @@ loss = torch.nn.CrossEntropyLoss()(cosine_with_margin, labels)
 ```
 conda create --name adaface pytorch==1.8.0 torchvision==0.9.0 cudatoolkit=10.2 -c pytorch
 conda activate adaface
-conda install scikit-image matplotlib pandas scikit-learn 
+conda install scikit-image matplotlib pandas scikit-learn
 pip install -r requirements.txt
 ```
 
@@ -95,8 +98,8 @@ pip install -r requirements.txt
 - [IMPORTANT] Note that our implementation assumes that input to the model is `BGR` color channel as in `cv2` package. InsightFace models assume `RGB` color channel as in `PIL` package. So all our evaluation code uses `BGR` color channel with `cv2` package.
 
 # Pretrained Models
-Note that our pretrained model takes the input in BGR color channel. 
-This is different from the InsightFace released model which uses RGB color channel. 
+Note that our pretrained model takes the input in BGR color channel.
+This is different from the InsightFace released model which uses RGB color channel.
 
 | Arch | Dataset    | Link                                                                                         |
 |------|------------|----------------------------------------------------------------------------------------------|
@@ -115,17 +118,17 @@ This is different from the InsightFace released model which uses RGB color chann
 # Inferece
 
 ### Example using provided sample images
-AdaFace takes input images that are preproccsed. 
-The preprocessing step involves 
-1. aligned with facial landmark (using MTCNN) and 
-2. cropped to 112x112x3 size whose color channel is BGR order. 
+AdaFace takes input images that are preproccsed.
+The preprocessing step involves
+1. aligned with facial landmark (using MTCNN) and
+2. cropped to 112x112x3 size whose color channel is BGR order.
 
-We provide the code for performing the preprocessing step. 
-For using pretrained AdaFace model for inference, 
+We provide the code for performing the preprocessing step.
+For using pretrained AdaFace model for inference,
 
 1. Download the pretrained adaface model and place it in `pretrained/`
 
-2. For using pretrained AdaFace on below 3 images, run 
+2. For using pretrained AdaFace on below 3 images, run
 ```
 python inference.py
 ```
@@ -134,7 +137,7 @@ python inference.py
 |:--------------------------------------------------------------:|:--------------------------------------------------------------:|---------------------------------------------------------------:|
 | <img src="face_alignment/test_images/img1.jpeg" width="215" /> | <img src="face_alignment/test_images/img2.jpeg" width="130" /> | <img src="face_alignment/test_images/img3.jpeg" width="191" /> |
 
-The similarity score result should be 
+The similarity score result should be
 ```
 tensor([[ 1.0000,  0.7334, -0.0655],
         [ 0.7334,  1.0000, -0.0277],
@@ -154,16 +157,16 @@ bgr_input = to_input(aligned_rgb_img)
 feature, _ = model(bgr_input)
 ```
 
-- Note that AdaFace model is a vanilla pytorch model which takes in `bgr_input` which is 112x112x3 
-torch tensor with BGR color channel whose value is normalized with `mean=0.5` and `std=0.5`, 
+- Note that AdaFace model is a vanilla pytorch model which takes in `bgr_input` which is 112x112x3
+torch tensor with BGR color channel whose value is normalized with `mean=0.5` and `std=0.5`,
 as in [to_input()](https://github.com/mk-minchul/AdaFace/blob/d8114b3ca8c54cd81ef59ac34c19eda1c548ca17/inference.py#L22)
-- When preprocessing step produces error, it is likely that the MTCNN cannot find face in an image. 
+- When preprocessing step produces error, it is likely that the MTCNN cannot find face in an image.
 Refer to [issues/28](https://github.com/mk-minchul/AdaFace/issues/28) for the discussion.
 # Validation
 
 ## High Quality Image Validation Sets (LFW, CFPFP, CPLFW, CALFW, AGEDB)
 For evaluation on 5 HQ image validation sets with pretrained models,
-refer to 
+refer to
 ```
 bash validation_hq/eval_5valsets.sh
 ```
@@ -194,7 +197,7 @@ bash validation_hq/eval_5valsets.sh
 
 ## Mixed Quality Scenario (IJBB, IJBC Dataset)
 
-For IJBB, IJBC validation, refer to 
+For IJBB, IJBC validation, refer to
 ```
 cd validation_mixed
 bash eval_ijb.sh
